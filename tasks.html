@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .container{
+
+            width: 820px;
+            margin: auto;
+            margin-top: 50px;
+            overflow: hidden;
+            /* border: 1px solid black; */
+
+        }
+        #inp{
+            display: block;
+            box-sizing: border-box;
+            width: 100%;
+            padding: 10px;
+            font-size: 20px;
+        }
+        ul li{
+            box-sizing: border-box;
+            width: 100%;
+            list-style: none;
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color:#3498db;        
+            color: white;
+            font-size: 20px;
+            position: relative;
+        }
+        .close{
+            cursor: pointer;
+            position:absolute;
+            right: 10px;
+            top:10px; 
+         }
+         .done{
+            text-decoration: line-through;
+            background-color: gray !important;
+         }
+         .remove{
+            animation: remove 500ms forwards;
+         }
+         @keyframes remove {
+            from{
+                opacity: 1;
+                transform: translateX(0px);
+            }
+            to{
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            
+         }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="inp" placeholder="Enter the task here"/>
+        <ul id="notesbox">
+           <!-- <li class="task">Task1 <span class="close"><i class="fa-solid fa-xmark"></i></span></li>  -->
+        </ul>
+    </div>
+    <script>
+        let input = document.getElementById('inp');
+        let noteBox = document.getElementById('notesbox');
+        input.addEventListener('keyup',function(e){
+            if((e.target.value !="") && (e.key=="Enter"))
+            {
+                let element = document.createElement('li');
+                const inputText = e.target.value;
+                element.innerHTML=`${inputText} <i class="fa-solid fa-xmark close"></i>`; 
+                noteBox.append(element);
+                e.target.value="";
+                element.children[0].addEventListener("click",function(e){
+                    e.stopPropagation();
+                    element.classList.add("remove");
+                    setTimeout(function(){
+                        element.remove();
+                    },500);
+                })
+                element.addEventListener('click', function(e){
+                    e.stopPropagation();
+                    element.classList.toggle('done');
+                })
+            }
+        })
+
+    </script>
+</body>
+</html>
